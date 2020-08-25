@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Gallery</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/0e7914c496.js" crossorigin="anonymous"></script>
+    <style>
+        html,
+        body {
+            height: 100%
+        }
+
+        .quote-card {
+            border-radius: 16px;
+            width: 650px;
+            transition: all .2s ease;
+            -webkit-animation: fade 4s;
+            -moz-animation: fade 4s;
+            -o-animation: fade 4s;
+            animation: fade 4s;
+        }
+
+        .quote {
+            font-size: 27px;
+        }
+
+        .quote-author {
+            font-size: 24px;
+        }
+
+        .quote-left {
+            font-size: 35px;
+        }
+
+        .quote-right {
+            font-size: 90px;
+        }
+
+        .btn-circle {
+            width: 40px;
+            height: 40px;
+            padding: 0px;
+            border-radius: 20px;
+            font-size: 20px;
+            background-color: red;
+            text-align: center;
+        }
+
+        @-webkit-keyframes fade {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @-moz-keyframes fade {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @-o-keyframes fade {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes fade {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+    <section class="h-100" style="background-color: antiquewhite;">
+        <header class="container h-100">
+            <div class="d-flex align-items-center justify-content-center h-100">
+                <div class="d-flex flex-row align-items-center justify-content-around w-100">
+                    <a href="#" class="btn btn-circle">&#60;</a>
+                    <div class="card quote-card">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <h5 class="card-title quote-left"><i class="fas fa-quote-left"></i></h5>
+                            <p class="card-text quote">Some quick example text to build on the card title and make up
+                                the bulk of the card's content.</p>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h2 class="quote-author">Willy Aditya Nugraha</h2>
+                                <h5 class="quote-right"> <i class="fas fa-quote-right"></i></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-circle">&#62;</a>
+                </div>
+            </div>
+        </header>
+    </section>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+
+    <script>
+        let arrQuotes;
+        fetch('https://quotes-api.archv.id/api/quotes/v1/latest')
+            .then(response => response.json())
+            .then(result => { arrQuotes = JSON.parse(JSON.stringify(result)) });
+
+        function changeQuote() {
+            //this numQuote is for choosing random quote index
+            var numQuote = Math.floor(Math.random() * 100) + 1;
+            var something = document.getElementsByClassName("quote")[0].innerHTML = arrQuotes.content[numQuote].content;
+            var something1 = document.getElementsByClassName("quote-author")[0].innerHTML = arrQuotes.content[numQuote].author;
+        }
+    </script>
+</body>
+
+</html>
