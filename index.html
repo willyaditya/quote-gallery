@@ -15,14 +15,24 @@
             height: 100%
         }
 
+        .section-quote {
+            background-image: url("images/background-0.jpg");
+            background-repeat: repeat;
+            background-size: auto;
+            background-repeat: no-repeat;
+            background-size: cover;
+            transition: all .2s ease;
+            animation: fade 1s;
+        }
+
         .quote-card {
             border-radius: 16px;
             width: 650px;
-            transition: all .2s ease;
-            -webkit-animation: fade 4s;
+            /* transition: all .2s ease; */
+            /* -webkit-animation: fade 4s;
             -moz-animation: fade 4s;
-            -o-animation: fade 4s;
-            animation: fade 4s;
+            -o-animation: fade 4s; */
+            /* animation: fade 1s; */
         }
 
         .quote {
@@ -99,11 +109,11 @@
             }
 
             50% {
-                opacity: 1;
+                opacity: .5;
             }
 
             100% {
-                opacity: 0;
+                opacity: 1;
             }
         }
     </style>
@@ -112,7 +122,7 @@
 
 <body>
 
-    <section class="h-100" style="background-color: antiquewhite;">
+    <section class="h-100 section-quote">
         <header class="container h-100">
             <div class="d-flex align-items-center justify-content-center h-100">
                 <div class="d-flex flex-row align-items-center justify-content-around w-100">
@@ -120,10 +130,9 @@
                     <div class="card quote-card">
                         <div class="card-body d-flex flex-column justify-content-between">
                             <h5 class="card-title quote-left"><i class="fas fa-quote-left"></i></h5>
-                            <p class="card-text quote">Some quick example text to build on the card title and make up
-                                the bulk of the card's content.</p>
+                            <p class="card-text quote"></p>
                             <div class="d-flex align-items-center justify-content-between">
-                                <h2 class="quote-author">Willy Aditya Nugraha</h2>
+                                <h2 class="quote-author"></h2>
                                 <h5 class="quote-right"> <i class="fas fa-quote-right"></i></h5>
                             </div>
                         </div>
@@ -147,15 +156,49 @@
 
     <script>
         let arrQuotes;
+        let index = 0;
+        let indexImage = 0;
+
         fetch('https://quotes-api.archv.id/api/quotes/v1/latest')
             .then(response => response.json())
-            .then(result => { arrQuotes = JSON.parse(JSON.stringify(result)) });
+            .then(result => {
+                document.getElementsByClassName("quote")[0].innerHTML = result.content[0].content;
+                document.getElementsByClassName("quote-author")[0].innerHTML = result.content[0].author;
+                arrQuotes = JSON.parse(JSON.stringify(result))
+            });
+
+
+        function nextQuote() {
+            if (index + 1 <= 3) {
+                ++index;
+            } else {
+                index = 0;
+            }
+
+            changeQuote();
+        }
+
+        function prevQuote() {
+            if (index - 1 >= 0) {
+                --index;
+            } else {
+                index = 3
+            }
+
+            changeQuote();
+        }
 
         function changeQuote() {
-            //this numQuote is for choosing random quote index
-            var numQuote = Math.floor(Math.random() * 100) + 1;
-            var something = document.getElementsByClassName("quote")[0].innerHTML = arrQuotes.content[numQuote].content;
-            var something1 = document.getElementsByClassName("quote-author")[0].innerHTML = arrQuotes.content[numQuote].author;
+            var something = document.getElementsByClassName("quote")[0].innerHTML = arrQuotes.content[index].content;
+            var something1 = document.getElementsByClassName("quote-author")[0].innerHTML = arrQuotes.content[index].author;
+            document.getElementsByClassName("section-quote")[0].style.backgroundImage = `url('images/background-${index}.jpg')`;
+            resetElement();
+        }
+
+        function resetElement() {
+            var elm = document.getElementsByClassName("section-quote")[0];
+            var newone = elm.cloneNode(true);
+            elm.parentNode.replaceChild(newone, elm);
         }
     </script>
 </body>
